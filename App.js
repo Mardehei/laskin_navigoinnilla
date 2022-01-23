@@ -1,12 +1,63 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+
 
 export default function App() {
+
+  const [number1, setNumber1] = React.useState('');
+  const [number2, setNumber2] = React.useState('');
+  const [result, setResult] = React.useState('');
+
+  const add = () => {
+    if (isNaN(number1) || (isNaN(number2))) {
+      setResult(0);
+    } else {
+      setResult(parseInt(number1) + parseInt(number2));
+    }
+  }
+
+  const subtract = () => {
+    if (isNaN(number1) || (isNaN(number2))) {
+      setResult(0);
+    } else {
+      setResult(parseInt(number1) - parseInt(number2));
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>Laskin</Text>
+      <Text>Results: {result}</Text>
+      <SafeAreaView>
+        <TextInput
+          style={styles.input}
+          onChangeText={number1 => setNumber1(number1)}
+          value={number1}
+          placeholder="Syötä ensimmäinen luku"
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={number2 => setNumber2(number2)}
+          value={number2}
+          placeholder="Syötä toinen luku"
+          keyboardType="numeric"
+        />
+      <StatusBar style="auto"/>
+      </SafeAreaView>
+      <View style={{ flexDirection: "row" }}>
+      <Button
+        title="+"
+        onPress={add}
+      />
+      <Button
+        title="-"
+        onPress={subtract}
+      />
+      </View>
     </View>
+    
   );
 }
 
