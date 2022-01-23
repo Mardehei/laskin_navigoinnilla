@@ -10,19 +10,11 @@ export default function App() {
   const [result, setResult] = React.useState('');
 
   const add = () => {
-    if (isNaN(number1) || (isNaN(number2))) {
-      setResult(0);
-    } else {
       setResult(parseInt(number1) + parseInt(number2));
-    }
   }
 
   const subtract = () => {
-    if (isNaN(number1) || (isNaN(number2))) {
-      setResult(0);
-    } else {
       setResult(parseInt(number1) - parseInt(number2));
-    }
   }
 
   return (
