@@ -30,7 +30,7 @@ export default function App() {
   }
 
   function History({route, navigation}) {
-    const {data} = route.params;
+    const {data} = route.params; 
     return (
       <View style={styles.container}>
           <Text style={styles.text}>Equations</Text>
