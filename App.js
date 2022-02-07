@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, Button, RecyclerViewBackedScrollViewComponent } from 'react-native';
-
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
 
@@ -28,6 +29,20 @@ export default function App() {
       setNumber2('');
   }
 
+  function History({route, navigation}) {
+    const {data} = route.params;
+    return (
+      <View style={styles.container}>
+          <Text style={styles.text}>Equations</Text>
+          <FlatList
+            data={data}
+            renderItem={({item}) => (<Text>{item.key}</Text>)}
+          />
+      </View>
+    )
+  }
+
+function Laskin({navigation}) {
   return (
     <View style={styles.container}>
       <Text>Result: {result}</Text>
@@ -36,37 +51,38 @@ export default function App() {
           style={styles.input}
           onChangeText={number1 => setNumber1(number1)}
           value={number1}
-          placeholder="Syötä ensimmäinen luku"
+          placeholder="Type first number"
           keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
           onChangeText={number2 => setNumber2(number2)}
           value={number2}
-          placeholder="Syötä toinen luku"
+          placeholder="Type second number"
           keyboardType="numeric"
         />
         <StatusBar style="auto"/>
       </SafeAreaView>
       <View style={styles.buttons}>
-        <Button
-          title="+"
-          onPress={add}
-        />
+        <Button title="+" onPress={add}/>
         <View style={styles.space} />
-        <Button
-          title="-"
-          onPress={subtract}
-        />
+        <Button title="-" onPress={subtract}/>
+        <View style={styles.space} />
+        <Button title="History" onPress={() => navigation.navigate("History", {data: data})}
+      />
       </View>
-      <Text style={styles.text}>History</Text>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <Text>{item.key}</Text>
-        )}
-        />
     </View>
+  );
+}
+const Stack = createStackNavigator();
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Calculator">
+        <Stack.Screen name="Calculator" component={Laskin} />
+        <Stack.Screen name="History" component={History} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -76,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 100,
+    
   },
   input: {
     height: 40,
@@ -101,3 +117,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
+
